@@ -68,7 +68,7 @@ StudySage/
 
 ### 1) Clone & set up
 ```bash
-git clone https://github.com/Sahaj33-op/StudySage-Offline-Online-AI-Note-Assistant.git
+git clone https://github.com/sizwinz/StudySage-Offline-Online-AI-Note-Assistant.git
 cd StudySage-Offline-Online-AI-Note-Assistant
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
