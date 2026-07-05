@@ -11,8 +11,10 @@ def _ensure_nltk():
     try:
         nltk.data.find("tokenizers/punkt_tab")
     except LookupError:
-        # some envs split models; ignore if not present
-        pass
+        try:
+            nltk.download("punkt_tab", quiet=True)
+        except Exception:
+            pass
     try:
         nltk.data.find("corpora/stopwords")
     except LookupError:

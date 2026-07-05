@@ -138,13 +138,39 @@ def summarize_text(
         if progress_callback:
             progress_callback("Preparing offline model", 0, total)
         model_dir = get_model_path()
-        # device=-1 forces CPU; you can switch to device=0 for GPU if available
-        summarizer = pipeline("summarization", model=str(model_dir), device=-1)
+        
+        # Load tokenizer and model manually for cross-version compatibility
+        tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
+        
+        # Force CPU device
+        device = "cpu"
+        model = model.to(device)
+        
+        import torch
+        
         for i, chunk in enumerate(chunks, 1):
             if progress_callback:
                 progress_callback("Summarizing chunks (offline)", i, total)
-            out = summarizer(chunk, max_length=max_length, min_length=min_length, do_sample=False)
-            summaries.append(out[0]["summary_text"])
+            
+            inputs = tokenizer(
+                chunk,
+                max_length=1024,
+                truncation=True,
+                return_tensors="pt"
+            ).to(device)
+            
+            with torch.no_grad():
+                summary_ids = model.generate(
+                    inputs["input_ids"],
+                    max_length=max_length,
+                    min_length=min_length,
+                    num_beams=4,
+                    early_stopping=True
+                )
+            
+            out = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+            summaries.append(out.strip())
     else:
         # online via HF Inference API
         api_key = (config.get("api_key") or "").strip()

@@ -12,3 +12,6 @@ requests
 customtkinter
 opencv-python
 langdetect
+fastapi
+uvicorn
+python-multipart

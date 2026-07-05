@@ -70,7 +70,8 @@ def print_logo():
     clear_terminal()
     f = Figlet(font='slant')
     print(Fore.CYAN + f.renderText("StudySage"))
-    print(Fore.YELLOW + "🧠 StudySage – AI Note Assistant by Sahaj33\n")
+    print(Fore.YELLOW + "StudySage – AI Note Assistant by Sahaj33")
+    print(Fore.BLUE + "🌐 GitHub: https://github.com/sizwinz/StudySage-Offline-Online-AI-Note-Assistant\n")
 
 def print_mode_banner(mode):
     clear_terminal()
@@ -81,7 +82,9 @@ def print_mode_banner(mode):
     print(mode_color + "=" * 50)
     print(mode_color + f"🎯 {mode_text} ACTIVATED")
     print(mode_color + "=" * 50 + "\n")
-    print(Fore.YELLOW + "🧠 StudySage – AI Note Assistant by Sahaj33\n")
+    print(Fore.YELLOW + "StudySage – AI Note Assistant by Sahaj33")
+    print(Fore.BLUE + "🌐 GitHub: https://github.com/sizwinz/StudySage-Offline-Online-AI-Note-Assistant\n")
+
 
 def count_words(text):
     return len(text.split())

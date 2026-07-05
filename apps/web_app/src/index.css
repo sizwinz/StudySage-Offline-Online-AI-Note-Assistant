@@ -1,0 +1,66 @@
+:root {
+  /* Dark Theme Variables by Default */
+  --bg-primary: #0a0a0c;
+  --bg-sidebar: #111113;
+  --bg-card: #151518;
+  --bg-input: #1a1a1f;
+  --border-color: #222226;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --sidebar-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-title: 'Outfit', sans-serif;
+}
+
+[data-theme="light"] {
+  /* Light Theme Variables */
+  --bg-primary: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f1f5f9;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-green: #15803d;
+  --accent-red: #b91c1c;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --sidebar-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}

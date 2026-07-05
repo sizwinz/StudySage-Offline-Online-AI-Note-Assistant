@@ -121,7 +121,7 @@ class StudySageBot:
         chat_id = self._chat_id(update)
 
         welcome_text = (
-            f"🧠 <b>Welcome to StudySage Bot, {_escape(user.first_name)}!</b>\n\n"
+            f"<b>Welcome to StudySage Bot, {_escape(user.first_name)}!</b>\n\n"
             "I'm your AI-powered study assistant. I can help you:\n\n"
             "📝 <b>Summarize</b> documents and notes\n"
             "🧪 <b>Generate quiz</b> questions from your content\n"
@@ -133,7 +133,8 @@ class StudySageBot:
         keyboard = _kb([
             [InlineKeyboardButton("📖 How to Use", callback_data='help')],
             [InlineKeyboardButton("⚙️ Settings", callback_data='settings')],
-            [InlineKeyboardButton("📊 Examples", callback_data='examples')]
+            [InlineKeyboardButton("📊 Examples", callback_data='examples')],
+            [InlineKeyboardButton("📁 GitHub Repository", url="https://github.com/sizwinz/StudySage-Offline-Online-AI-Note-Assistant")]
         ])
         await self._send_html(context, chat_id, welcome_text, keyboard)
 

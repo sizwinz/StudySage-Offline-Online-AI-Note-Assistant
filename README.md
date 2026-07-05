@@ -1,157 +1,157 @@
-# 🧠 StudySage — Offline/Online AI Note Assistant
+# <p align="center"><img src="assets/images/logo.png" alt="StudySage Logo" width="90" height="90" /><br>StudySage</p>
 
-Transform notes, PDFs, and screenshots into crisp summaries and smart MCQs. Use it as a web app, Telegram bot, desktop GUI, or CLI — all powered by the same core engine.
+<p align="center">
+  <strong>Offline & Online AI Note Assistant</strong>
+</p>
 
 <p align="center">
   <a href="https://studysage-sahaj33.streamlit.app/" target="_blank">
-    <img src="https://img.shields.io/badge/Streamlit-App-ff4b4b?logo=streamlit" />
+    <img src="https://img.shields.io/badge/Streamlit-App-ff4b4b?style=for-the-badge&logo=streamlit" alt="Streamlit Cloud App" />
   </a>
-  <img src="https://img.shields.io/badge/Python-3.10+-blue" />
-  <img src="https://img.shields.io/badge/Offline%20AI-Yes-green" />
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen" /></a>
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+" />
+  <img src="https://img.shields.io/badge/Offline%20Inference-Capable-success?style=for-the-badge&logo=huggingface" alt="Offline Inference" />
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge" alt="MIT License" />
+  </a>
 </p>
-
-## ✨ Features
-
-- **Summarize** text/PDFs/images (OCR) — offline or via Hugging Face API  
-- **Generate quizzes** (MCQs with distractors)  
-- **Advanced OCR**: images, scanned PDFs, screen photos; language auto-detect (Tesseract)  
-- **Export to PDF** for summaries & quizzes  
-- **Four interfaces**: Streamlit web, Telegram bot, GUI, CLI
 
 ---
 
-## 📁 Recommended Repository Structure
+## 🌟 Introduction
 
-```
+**StudySage** is a high-fidelity, privacy-first AI study assistant. It helps you transform raw notes, scanned lectures, and screenshot captures into structured study guides, concise summaries, and interactive multiple-choice question boards.
 
+StudySage runs on a unified core engine, powering **five distinct user interfaces** depending on your workflow: a single-port React web app, a Streamlit page, a native desktop GUI, a Telegram chatbot, or a traditional terminal command line.
+
+---
+
+## ✨ Features
+
+- 🧠 **Smart Summarization**: Summarize large documents locally using a Seq2Seq transformer model (`distilbart`) or online via the Hugging Face Inference API.
+- 🧪 **Interactive Quizzes**: Generate multiple-choice questions (MCQs) automatically using sentence tokenizer analysis and play them interactively.
+- 🖼️ **Advanced OCR Engine**: Preprocesses screen captures using an adaptive OpenCV pipeline (denoising, grayscaling, thresholding, and morphological operations) and runs Tesseract OCR with automatic language detection.
+- 📄 **Executive PDF Reports**: Export summaries and quizzes into clean, executive A4 PDF reports. Supports both a print-friendly **Light Theme** and a modern **Dark Theme (Obsidian)**.
+- 🌐 **Five Interfaces**: Choose between React SPA, Streamlit Web, CustomTkinter Desktop, Telegram Chatbot, or Interactive CLI.
+
+---
+
+## 📁 Repository Architecture
+
+```text
 StudySage/
-├─ assets/
-│  └─ images/
-│     ├─ logo.png
-│     └─ logo-black.png
-├─ core/                     # single source of truth for business logic
-│  ├─ export\_pdf.py
-│  ├─ ocr\_reader.py
-│  ├─ quiz\_gen.py
-│  ├─ summarize.py
-│  └─ **init**.py
-├─ apps/
-│  ├─ streamlit\_app/
-│  │  └─ app.py
-│  ├─ gui/
-│  │  └─ gui.py
-│  ├─ cli/
-│  │  └─ main.py
-│  └─ telegram\_bot/
-│     ├─ telegram\_bot.py
-│     ├─ bot\_config.sample.json
-│     └─ requirements.txt
-├─ config.py                 # Centralized configuration
-├─ models/                   # auto-downloaded (gitignored)
-├─ output/                   # generated files (gitignored)
-├─ requirements.txt          # core + web/gui/cli deps
-├─ packages.txt              # system packages (e.g., tesseract)
-├─ LICENSE
-└─ README.md
-
-````
-
-**Why this layout?**  
-- One **`core/`** package reused everywhere (no duplication).  
-- Each interface lives under **`apps/`** with its own entry file.  
-- All images under **`assets/images/`** (no “where is the logo?!” chaos).  
+├── assets/                  # Branding materials & images
+│   └── images/              # Application logo files
+├── core/                    # Core Business Logic Layer (Single Source of Truth)
+│   ├── __init__.py
+│   ├── export_pdf.py        # ReportLab PDF compilation
+│   ├── io.py                # Unified document loaders
+│   ├── ocr_reader.py        # OpenCV image preprocessing & Tesseract OCR
+│   ├── quiz_gen.py          # NLTK keyword-based quiz generator
+│   └── summarize.py         # Seq2Seq offline/online summarization engine
+├── apps/                    # Interfaces Layer
+│   ├── api/                 # FastAPI REST backend service
+│   ├── web_app/             # Modern React + TypeScript (Vite) Single Page App
+│   ├── streamlit_app/       # Glassmorphic Streamlit web interface
+│   ├── gui/                 # CustomTkinter Dark/Light desktop GUI
+│   ├── cli/                 # Figlet-styled interactive terminal CLI
+│   └── telegram_bot/        # Asynchronous telegram chatbot daemon
+├── tests/                   # Test suite directory
+├── config.py                # Global settings & text limits
+├── requirements.txt         # Core Python dependencies
+├── packages.txt             # System package dependencies
+└── README.md
+```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1) Clone & set up
+### 1) Clone & Configure Environment
 ```bash
+# Clone the repository
 git clone https://github.com/sizwinz/StudySage-Offline-Online-AI-Note-Assistant.git
 cd StudySage-Offline-Online-AI-Note-Assistant
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# Create and activate a virtual environment
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
-````
-
-### 2) Tesseract OCR
-
-* Windows: install from UB Mannheim build and ensure it’s on PATH
-* macOS: `brew install tesseract`
-* Linux: `sudo apt install tesseract-ocr`
-
-### 3) Interfaces
-
-#### 🌐 Streamlit (web)
-
-```bash
-streamlit run apps/streamlit_app/app.py
 ```
 
-#### 🤖 Telegram Bot
+### 2) Install Tesseract OCR Engine
+- **Windows**: Download the installer from the [UB Mannheim build](https://github.com/UB-Mannheim/tesseract/wiki) and ensure the executable path is added to your environment `PATH`.
+- **macOS**: Install via Homebrew:
+  ```bash
+  brew install tesseract
+  ```
+- **Linux**: Install via APT:
+  ```bash
+  sudo apt install tesseract-ocr
+  ```
+
+---
+
+## 🖥️ Running the Applications
+
+### Option A: The Unified Web Application (Recommended)
+You can build the React frontend and serve it alongside the FastAPI backend on a single port (`8000`).
 
 ```bash
-cd apps/telegram_bot
-cp bot_config.sample.json bot_config.json
-# put your Bot Token + (optional) HF token in bot_config.json
-pip install -r requirements.txt
-python telegram_bot.py
+# 1) Build the static React application
+cd apps/web_app
+npm install
+npm run build
+
+# 2) Launch the FastAPI server from the root directory
+cd ../..
+python apps/api/server.py
 ```
+Open **[http://localhost:8000/](http://localhost:8000/)** in your browser.
 
-#### 🖥️ GUI
+---
 
-```bash
-python apps/gui/gui.py
-```
+### Option B: Interface-Specific Launch Commands
 
-#### 💻 CLI
-
-```bash
-python apps/cli/main.py
-```
+| Interface | Platform | Commands |
+| :--- | :--- | :--- |
+| **Vite Development Server** | Web | `cd apps/web_app && npm run dev` <br> *(React app running on port 5173, requires FastAPI server running)* |
+| **Streamlit Page** | Web | `streamlit run apps/streamlit_app/app.py` |
+| **Desktop GUI** | Desktop | `python apps/gui/gui.py` |
+| **Telegram Bot** | Telegram | `cd apps/telegram_bot && cp bot_config.sample.json bot_config.json` <br> *(Add bot credentials and run `python telegram_bot.py`)* |
+| **CLI Terminal** | Shell | `python apps/cli/main.py` |
 
 ---
 
 ## ⚙️ Modes & Limits
 
-| Mode    | Internet | Privacy | Speed    | Typical Limits                  |
-| ------- | -------- | ------- | -------- | ------------------------------- |
-| Offline | ❌        | 🔒      | ◻︎◻︎◻︎   | up to \~20k words               |
-| Online  | ✅        | API     | ◻︎◻︎◻︎◻︎ | \~800 words / 4k chars per call |
-
-Set Hugging Face token for online mode.
+| Mode | Internet Required | Privacy | Processing Speed | Document Limits |
+| :--- | :---: | :---: | :---: | :---: |
+| **Offline** | ❌ | 🔒 Local only | Moderate (CPU/GPU) | Up to ~20,000 words |
+| **Online** | ✅ | 🌐 Hugging Face API | Fast | ~800 words / 4,000 chars per call |
 
 ---
 
-## 🧠 Core APIs
+## 🛡️ Privacy & Security
 
-* `core.summarize.summarize_text(text, min_len, max_len)`
-* `core.quiz_gen.generate_questions(summary, num_questions)`
-* `core.ocr_reader.extract_text_from_image(path, lang="auto")`
-* `core.export_pdf.export_summary_to_pdf(text)` / `export_quiz_to_pdf(questions)`
+- **Offline Mode**: Keeps your note files, screenshot files, and generated study documents 100% local on your device. No information is transmitted across the internet.
+- **Online Mode**: Sends document text snippets to the Hugging Face Inference API. No files are stored or cached on remote servers.
 
 ---
 
-## 🧪 Development
+## 🧪 Testing
 
+Ensure all application paths point to the unified configuration folder by running the pytest suite:
 ```bash
-pip install -r requirements.txt
-pip install black flake8 pytest
-black .
-flake8
-pytest
+pytest tests/test_output_dir.py
 ```
-
----
-
-## 🛡️ Privacy
-
-* Offline mode never sends your data out.
-* Online mode uses Hugging Face Inference API.
 
 ---
 
 ## 🪪 License
 
-- MIT — see [LICENSE](LICENSE).
-
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
