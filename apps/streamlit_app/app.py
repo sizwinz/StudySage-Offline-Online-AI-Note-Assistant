@@ -224,7 +224,7 @@ if uploaded_file is not None:
     # Action buttons row
     col1, col2 = st.columns([1, 4])
     with col1:
-        process_btn = st.button("🧠 Process Note", type="primary")
+        process_btn = st.button("Process Note", type="primary")
         
     if process_btn:
         try:
@@ -241,14 +241,14 @@ if uploaded_file is not None:
                 st.session_state.summary = summary
                 st.session_state.file_processed = True
                 
-                st.toast("✅ Analysis complete!", icon="🧠")
+                st.toast("Analysis complete!")
         except Exception as e:
-            st.error(f"❌ Error processing document: {str(e)}")
+            st.error(f"Error processing document: {str(e)}")
             
     # Display results
     if st.session_state.file_processed:
         st.markdown("---")
-        st.markdown("### 📝 Results")
+        st.markdown("### Results")
         
         tab_summary, tab_quiz = st.tabs(["Document Summary", "Interactive Quiz"])
         
@@ -265,7 +265,7 @@ if uploaded_file is not None:
                     pdf_path = export_summary_to_pdf(st.session_state.summary, theme=selected_pdf_theme)
                     with open(pdf_path, "rb") as f:
                         st.download_button(
-                            label="📄 Download Summary PDF",
+                            label="Download Summary PDF",
                             data=f,
                             file_name=f"studysage_summary_{selected_pdf_theme}.pdf",
                             mime="application/pdf"
@@ -275,7 +275,7 @@ if uploaded_file is not None:
                     
             with col_export_txt:
                 st.download_button(
-                    label="💾 Download Summary Plain Text",
+                    label="Download Summary Plain Text",
                     data=st.session_state.summary,
                     file_name="studysage_summary.txt",
                     mime="text/plain"
@@ -289,16 +289,16 @@ if uploaded_file is not None:
                 num_questions = st.slider("Select number of questions", min_value=1, max_value=20, value=5)
             with col_btn:
                 st.markdown("<div style='padding-top: 25px;'></div>", unsafe_allow_html=True)
-                gen_quiz_btn = st.button("🧪 Generate Quiz")
+                gen_quiz_btn = st.button("Generate Quiz")
                 
             if gen_quiz_btn:
                 try:
                     with st.spinner("Extracting terms and compiling options..."):
                         questions = generate_questions(st.session_state.summary, num_questions)
                         st.session_state.questions = questions
-                        st.toast("✅ Quiz generated successfully!", icon="🧪")
+                        st.toast("Quiz generated successfully!")
                 except Exception as e:
-                    st.error(f"❌ Error generating quiz: {str(e)}")
+                    st.error(f"Error generating quiz: {str(e)}")
                     
             # Render Quiz Questions
             if st.session_state.questions:
@@ -322,7 +322,7 @@ if uploaded_file is not None:
                     pdf_path = export_quiz_to_pdf(st.session_state.questions, theme=selected_pdf_theme)
                     with open(pdf_path, "rb") as f:
                         st.download_button(
-                            label="📄 Download Quiz PDF",
+                            label="Download Quiz PDF",
                             data=f,
                             file_name=f"studysage_quiz_{selected_pdf_theme}.pdf",
                             mime="application/pdf"
@@ -332,4 +332,4 @@ if uploaded_file is not None:
             st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
-st.markdown("<br/><br/><hr/><center style='color: #71717a; font-size: 12px;'>🧠 StudySage AI - A minimal, high-fidelity note assistant.</center>", unsafe_allow_html=True)
+st.markdown("<br/><br/><hr/><center style='color: #71717a; font-size: 12px;'>StudySage AI - A minimal, high-fidelity note assistant.</center>", unsafe_allow_html=True)

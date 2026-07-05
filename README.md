@@ -17,7 +17,7 @@
 
 ---
 
-## 🌟 Introduction
+## Introduction
 
 **StudySage** is a high-fidelity, privacy-first AI study assistant. It helps you transform raw notes, scanned lectures, and screenshot captures into structured study guides, concise summaries, and interactive multiple-choice question boards.
 
@@ -25,25 +25,25 @@ StudySage runs on a unified core engine, powering **five distinct user interface
 
 ---
 
-## ✨ Features
+## Features
 
-- 🧠 **Smart Summarization**: Summarize large documents locally using a Seq2Seq transformer model (`distilbart`) or online via the Hugging Face Inference API.
-- 🧪 **Interactive Quizzes**: Generate multiple-choice questions (MCQs) automatically using sentence tokenizer analysis and play them interactively.
-- 🖼️ **Advanced OCR Engine**: Preprocesses screen captures using an adaptive OpenCV pipeline (denoising, grayscaling, thresholding, and morphological operations) and runs Tesseract OCR with automatic language detection.
-- 📄 **Executive PDF Reports**: Export summaries and quizzes into clean, executive A4 PDF reports. Supports both a print-friendly **Light Theme** and a modern **Dark Theme (Obsidian)**.
-- 🌐 **Five Interfaces**: Choose between React SPA, Streamlit Web, CustomTkinter Desktop, Telegram Chatbot, or Interactive CLI.
+- **Smart Summarization**: Summarize large documents locally using a Seq2Seq transformer model (`distilbart`) or online via the Hugging Face Inference API.
+- **Interactive Quizzes**: Generate multiple-choice questions (MCQs) automatically using sentence tokenizer analysis and play them interactively.
+- **Advanced OCR Engine**: Preprocesses screen captures using an adaptive OpenCV pipeline (denoising, grayscaling, thresholding, and morphological operations) and runs Tesseract OCR with automatic language detection.
+- **Executive PDF Reports**: Export summaries and quizzes into clean, executive A4 PDF reports. Supports both a print-friendly **Light Theme** and a modern **Dark Theme (Obsidian)**.
+- **Five Interfaces**: Choose between React SPA, Streamlit Web, CustomTkinter Desktop, Telegram Chatbot, or Interactive CLI.
 
 ---
 
-## 📸 Interface Showcases
+## Interface Showcases
 
-### ⚛️ React Single Page Application (Responsive Web App)
+### React Single Page Application (Responsive Web App)
 <p align="center">
   <img src="assets/images/react_web_app_summary.png" alt="React Web App - Summary View" width="49%" />
   <img src="assets/images/react_web_app_quiz.png" alt="React Web App - Quiz Board" width="49%" />
 </p>
 
-### 🌐 Streamlit Page & 🖥️ CustomTkinter Desktop GUI
+### Streamlit Page & CustomTkinter Desktop GUI
 <p align="center">
   <img src="assets/images/streamlit_app.png" alt="Streamlit Web Dashboard" width="49%" />
   <img src="assets/images/desktop_gui.png" alt="Desktop CustomTkinter App" width="49%" />
@@ -51,7 +51,7 @@ StudySage runs on a unified core engine, powering **five distinct user interface
 
 ---
 
-## 📁 Repository Architecture
+## Repository Architecture
 
 ```text
 StudySage/
@@ -80,7 +80,7 @@ StudySage/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1) Clone & Configure Environment
 ```bash
@@ -112,7 +112,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🖥️ Running the Applications
+## Running the Applications
 
 ### Option A: The Unified Web Application (Recommended)
 You can build the React frontend and serve it alongside the FastAPI backend on a single port (`8000`).
@@ -143,23 +143,23 @@ Open **[http://localhost:8000/](http://localhost:8000/)** in your browser.
 
 ---
 
-## ⚙️ Modes & Limits
+## Modes & Limits
 
 | Mode | Internet Required | Privacy | Processing Speed | Document Limits |
 | :--- | :---: | :---: | :---: | :---: |
-| **Offline** | ❌ | 🔒 Local only | Moderate (CPU/GPU) | Up to ~20,000 words |
-| **Online** | ✅ | 🌐 Hugging Face API | Fast | ~800 words / 4,000 chars per call |
+| **Offline** | No | Local only | Moderate (CPU/GPU) | Up to ~20,000 words |
+| **Online** | Yes | Hugging Face API | Fast | ~800 words / 4,000 chars per call |
 
 ---
 
-## 🛡️ Privacy & Security
+## Privacy & Security
 
 - **Offline Mode**: Keeps your note files, screenshot files, and generated study documents 100% local on your device. No information is transmitted across the internet.
 - **Online Mode**: Sends document text snippets to the Hugging Face Inference API. No files are stored or cached on remote servers.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Ensure all application paths point to the unified configuration folder by running the pytest suite:
 ```bash
@@ -168,6 +168,6 @@ pytest tests/test_output_dir.py
 
 ---
 
-## 🪪 License
+## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

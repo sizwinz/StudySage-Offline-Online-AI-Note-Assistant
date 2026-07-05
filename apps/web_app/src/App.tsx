@@ -310,8 +310,7 @@ export default function App() {
             }}
             onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-blue)'}
             onMouseOut={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
-          >
-            📁 GitHub Repository
+            GitHub Repository
           </a>
         </div>
         
@@ -391,10 +390,10 @@ export default function App() {
           <div className="section-title">Core Actions</div>
           <div className="action-buttons">
             <button className="primary-btn" onClick={handleGenerateSummary}>
-              🧠 Generate Summary
+              Generate Summary
             </button>
             <button className="secondary-btn" onClick={() => handleGenerateQuiz(5)}>
-              🧪 Generate Quiz
+              Generate Quiz
             </button>
           </div>
         </div>
@@ -428,7 +427,7 @@ export default function App() {
         )}
         
         <div className="status-banner">
-          <span>🎯 Status: {statusMsg}</span>
+          <span>Status: {statusMsg}</span>
         </div>
         
         {/* Upload zone if no file is present */}
@@ -446,7 +445,7 @@ export default function App() {
               style={{ display: 'none' }}
               accept=".pdf,.txt,.png,.jpg,.jpeg"
             />
-            <div className="dropzone-icon">📂</div>
+            <div className="dropzone-icon" style={{ fontSize: '32px', marginBottom: '8px', color: 'var(--text-secondary)' }}>↑</div>
             <div className="dropzone-text">Drag & drop your files here</div>
             <div className="dropzone-hint">Supports PDF, TXT, PNG, JPG (Max 20MB)</div>
           </div>
@@ -454,7 +453,7 @@ export default function App() {
         
         {file && (
           <div className="file-info">
-            <span>📄 File: <strong>{file.name}</strong> ({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+            <span>File: <strong>{file.name}</strong> ({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
             <button className="file-remove" onClick={removeFile}>Remove File</button>
           </div>
         )}
@@ -505,7 +504,7 @@ export default function App() {
                 {summaryText && (
                   <div className="result-actions">
                     <button className="primary-btn" onClick={() => exportPDF('summary')}>
-                      📄 Export Summary PDF
+                      Export Summary PDF
                     </button>
                   </div>
                 )}
@@ -559,7 +558,7 @@ export default function App() {
                     
                     <div className="result-actions">
                       <button className="primary-btn" onClick={() => exportPDF('quiz')}>
-                        📄 Export Quiz PDF
+                        Export Quiz PDF
                       </button>
                     </div>
                   </>
