@@ -41,133 +41,201 @@ if 'file_processed' not in st.session_state:
 OUTPUT_PATH = Path(OUTPUT_DIR)
 OUTPUT_PATH.mkdir(exist_ok=True)
 
-# Inject Modern CSS for Charcoal/Obsidian and Minimal Aesthetics
-st.markdown("""
+# Helper function to dynamically swap colors and assets based on the active theme
+def get_theme_colors():
+    # Default to original StudySage dark theme
+    colors = {
+        "background": "#0d0d0e",
+        "secondary_background": "#161619",
+        "sidebar_background": "#131315",
+        "sidebar_border": "#222225",
+        "border": "#2a2a2e",
+        "text": "#f3f4f6",
+        "text_muted": "#71717a",
+        "primary_button_bg": "#ffffff",
+        "primary_button_text": "#09090b",
+        "title_gradient_start": "#ffffff",
+        "title_gradient_end": "#a1a1aa",
+    }
+    
+    try:
+        if hasattr(st, "context") and hasattr(st.context, "theme") and st.context.theme:
+            theme_info = st.context.theme
+            theme_base = getattr(theme_info, "base", "") or getattr(theme_info, "type", "")
+            if "light" in theme_base.lower():
+                colors = {
+                    "background": "#ffffff",
+                    "secondary_background": "#f4f4f5",
+                    "sidebar_background": "#fafafa",
+                    "sidebar_border": "#e4e4e7",
+                    "border": "#e4e4e7",
+                    "text": "#18181b",
+                    "text_muted": "#71717a",
+                    "primary_button_bg": "#18181b",
+                    "primary_button_text": "#ffffff",
+                    "title_gradient_start": "#18181b",
+                    "title_gradient_end": "#71717a",
+                }
+    except Exception:
+        pass
+    return colors
+
+colors = get_theme_colors()
+
+# Inject Modern CSS that adapts dynamically to light & dark themes
+st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
 
 /* Global Font Override */
-html, body, [class*="css"] {
+html, body, [class*="css"] {{
     font-family: 'Inter', sans-serif;
-}
+}}
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {{
     font-family: 'Outfit', sans-serif;
     font-weight: 700;
-}
+}}
 
-/* Dark theme style adaptations */
-[data-testid="stAppViewContainer"] {
-    background-color: #0d0d0e;
-    color: #f3f4f6;
-}
+/* Dynamic theme adaptations */
+[data-testid="stAppViewContainer"] {{
+    background-color: {colors['background']};
+    color: {colors['text']};
+}}
 
-/* Sidebar Custom Glassmorphic styling */
-[data-testid="stSidebar"] {
-    background-color: #131315 !important;
-    border-right: 1px solid #222225;
-}
+/* Sidebar Custom styling */
+[data-testid="stSidebar"] {{
+    background-color: {colors['sidebar_background']} !important;
+    border-right: 1px solid {colors['sidebar_border']};
+}}
 
 /* Cards & Text Area Custom Styles */
-.stTextArea textarea {
-    background-color: #161619 !important;
-    border: 1px solid #2a2a2e !important;
-    color: #e5e7eb !important;
+.stTextArea textarea {{
+    background-color: {colors['secondary_background']} !important;
+    border: 1px solid {colors['border']} !important;
+    color: {colors['text']} !important;
     border-radius: 10px !important;
     font-size: 14px;
-}
-.stTextArea textarea:focus {
-    border-color: #4b5563 !important;
-    box-shadow: 0 0 0 1px #4b5563 !important;
-}
+}}
+.stTextArea textarea:focus {{
+    border-color: {colors['primary_button_bg']} !important;
+    box-shadow: 0 0 0 1px {colors['primary_button_bg']} !important;
+}}
 
 /* Inputs & Widgets styling */
-div[data-baseweb="input"] {
-    background-color: #161619 !important;
+div[data-baseweb="input"] {{
+    background-color: {colors['secondary_background']} !important;
     border-radius: 8px !important;
-}
-input {
-    color: #e5e7eb !important;
-}
+}}
+input {{
+    color: {colors['text']} !important;
+}}
 
 /* Segmented Control & Radios */
-div[data-testid="stRadio"] label {
+div[data-testid="stRadio"] label {{
     font-size: 13px !important;
-    color: #9ca3af !important;
-}
+    color: {colors['text_muted']} !important;
+}}
 
 /* Custom premium card design for results */
-.result-card {
-    background-color: #161619;
-    border: 1px solid #222225;
+.result-card {{
+    background-color: {colors['secondary_background']};
+    border: 1px solid {colors['border']};
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 20px;
-}
+}}
 
 /* Beautiful Gradient Title */
-.main-title {
-    background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+.main-title {{
+    background: linear-gradient(135deg, {colors['title_gradient_start']} 30%, {colors['title_gradient_end']} 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 0px;
-}
-.sub-title {
-    color: #71717a;
+}}
+.sub-title {{
+    color: {colors['text_muted']};
     font-size: 0.95rem;
     margin-top: -10px;
     margin-bottom: 30px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-}
+}}
 
 /* Modern minimalist buttons */
-div.stButton > button {
-    background: #18181b !important;
-    color: #e4e4e7 !important;
-    border: 1px solid #27272a !important;
+div.stButton > button {{
+    background: {colors['secondary_background']} !important;
+    color: {colors['text']} !important;
+    border: 1px solid {colors['border']} !important;
     border-radius: 8px !important;
     padding: 10px 20px !important;
     font-weight: 500 !important;
     font-size: 14px !important;
     transition: all 0.2s ease-in-out !important;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
-}
-div.stButton > button:hover {
-    background: #27272a !important;
-    border-color: #3f3f46 !important;
-    color: #ffffff !important;
+}}
+div.stButton > button:hover {{
+    background: {colors['background']} !important;
+    border-color: {colors['primary_button_bg']} !important;
+    color: {colors['primary_button_bg']} !important;
     transform: translateY(-1px);
-}
-div.stButton > button:active {
+}}
+div.stButton > button:active {{
     transform: translateY(0px);
-}
+}}
 
 /* Accent Process Button */
-div.stButton > button[kind="primary"] {
-    background: #ffffff !important;
-    color: #09090b !important;
-    border: 1px solid #ffffff !important;
-}
-div.stButton > button[kind="primary"]:hover {
-    background: #e4e4e7 !important;
-    border-color: #e4e4e7 !important;
-    color: #09090b !important;
-}
+div.stButton > button[kind="primary"] {{
+    background: {colors['primary_button_bg']} !important;
+    color: {colors['primary_button_text']} !important;
+    border: 1px solid {colors['primary_button_bg']} !important;
+}}
+div.stButton > button[kind="primary"]:hover {{
+    background: {colors['primary_button_bg']} !important;
+    opacity: 0.9;
+    border-color: {colors['primary_button_bg']} !important;
+    color: {colors['primary_button_text']} !important;
+}}
 
 /* Download buttons styling */
-a[data-testid="stDownloadButton"] {
+a[data-testid="stDownloadButton"] {{
     text-decoration: none !important;
-}
+    color: inherit !important;
+}}
+
+/* Sidebar links styling to prevent emoji underlines */
+[data-testid="stSidebar"] a {{
+    text-decoration: none !important;
+}}
+[data-testid="stSidebar"] a:hover {{
+    text-decoration: underline !important;
+}}
 </style>
 """, unsafe_allow_html=True)
+
+# Helper function to dynamically swap logo based on current theme (light vs dark)
+def get_theme_logo():
+    logo_filename = "logo.png"
+    try:
+        if hasattr(st, "context") and hasattr(st.context, "theme") and st.context.theme:
+            theme_info = st.context.theme
+            theme_base = getattr(theme_info, "base", "") or getattr(theme_info, "type", "")
+            if "light" in theme_base.lower():
+                logo_filename = "logo-black.png"
+    except Exception:
+        pass
+    
+    logo_path = ROOT / "assets" / "images" / logo_filename
+    if not logo_path.exists():
+        return str(ROOT / "assets" / "images" / "logo.png")
+    return str(logo_path)
 
 # Main Title Area
 col_logo, col_header = st.columns([1, 6])
 with col_logo:
-    logo_path = "assets/images/logo.png"
+    logo_path = get_theme_logo()
     if os.path.exists(logo_path):
         st.image(logo_path, width=80)
 with col_header:
