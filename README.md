@@ -35,6 +35,22 @@ StudySage runs on a unified core engine, powering **five distinct user interface
 
 ---
 
+## 📸 Interface Showcases
+
+### ⚛️ React Single Page Application (Responsive Web App)
+<p align="center">
+  <img src="assets/images/react_web_app_summary.png" alt="React Web App - Summary View" width="49%" />
+  <img src="assets/images/react_web_app_quiz.png" alt="React Web App - Quiz Board" width="49%" />
+</p>
+
+### 🌐 Streamlit Page & 🖥️ CustomTkinter Desktop GUI
+<p align="center">
+  <img src="assets/images/streamlit_app.png" alt="Streamlit Web Dashboard" width="49%" />
+  <img src="assets/images/desktop_gui.png" alt="Desktop CustomTkinter App" width="49%" />
+</p>
+
+---
+
 ## 📁 Repository Architecture
 
 ```text
