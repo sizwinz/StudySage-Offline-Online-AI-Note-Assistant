@@ -36,6 +36,17 @@ if 'questions' not in st.session_state:
     st.session_state.questions = []
 if 'file_processed' not in st.session_state:
     st.session_state.file_processed = False
+if 'app_theme' not in st.session_state:
+    default_theme = "light"
+    try:
+        if hasattr(st, "context") and hasattr(st.context, "theme") and st.context.theme:
+            theme_info = st.context.theme
+            theme_base = getattr(theme_info, "base", "") or getattr(theme_info, "type", "")
+            if "dark" in theme_base.lower():
+                default_theme = "dark"
+    except Exception:
+        pass
+    st.session_state.app_theme = default_theme
 
 # Create output directory
 OUTPUT_PATH = Path(OUTPUT_DIR)
@@ -43,42 +54,37 @@ OUTPUT_PATH.mkdir(exist_ok=True)
 
 # Helper function to dynamically swap colors and assets based on the active theme
 def get_theme_colors():
-    # Default to original StudySage dark theme
-    colors = {
-        "background": "#0d0d0e",
-        "secondary_background": "#161619",
-        "sidebar_background": "#131315",
-        "sidebar_border": "#222225",
-        "border": "#2a2a2e",
-        "text": "#f3f4f6",
-        "text_muted": "#71717a",
-        "primary_button_bg": "#ffffff",
-        "primary_button_text": "#09090b",
-        "title_gradient_start": "#ffffff",
-        "title_gradient_end": "#a1a1aa",
-    }
-    
-    try:
-        if hasattr(st, "context") and hasattr(st.context, "theme") and st.context.theme:
-            theme_info = st.context.theme
-            theme_base = getattr(theme_info, "base", "") or getattr(theme_info, "type", "")
-            if "light" in theme_base.lower():
-                colors = {
-                    "background": "#ffffff",
-                    "secondary_background": "#f4f4f5",
-                    "sidebar_background": "#fafafa",
-                    "sidebar_border": "#e4e4e7",
-                    "border": "#e4e4e7",
-                    "text": "#18181b",
-                    "text_muted": "#71717a",
-                    "primary_button_bg": "#18181b",
-                    "primary_button_text": "#ffffff",
-                    "title_gradient_start": "#18181b",
-                    "title_gradient_end": "#71717a",
-                }
-    except Exception:
-        pass
-    return colors
+    selected_theme = st.session_state.get("app_theme", "light")
+    if selected_theme == "dark":
+        # Original StudySage dark theme
+        return {
+            "background": "#0d0d0e",
+            "secondary_background": "#161619",
+            "sidebar_background": "#131315",
+            "sidebar_border": "#222225",
+            "border": "#2a2a2e",
+            "text": "#f3f4f6",
+            "text_muted": "#71717a",
+            "primary_button_bg": "#ffffff",
+            "primary_button_text": "#09090b",
+            "title_gradient_start": "#ffffff",
+            "title_gradient_end": "#a1a1aa",
+        }
+    else:
+        # Default StudySage light theme
+        return {
+            "background": "#ffffff",
+            "secondary_background": "#f4f4f5",
+            "sidebar_background": "#fafafa",
+            "sidebar_border": "#e4e4e7",
+            "border": "#e4e4e7",
+            "text": "#18181b",
+            "text_muted": "#71717a",
+            "primary_button_bg": "#18181b",
+            "primary_button_text": "#ffffff",
+            "title_gradient_start": "#18181b",
+            "title_gradient_end": "#71717a",
+        }
 
 colors = get_theme_colors()
 
@@ -218,14 +224,8 @@ a[data-testid="stDownloadButton"] {{
 # Helper function to dynamically swap logo based on current theme (light vs dark)
 def get_theme_logo():
     logo_filename = "logo.png"
-    try:
-        if hasattr(st, "context") and hasattr(st.context, "theme") and st.context.theme:
-            theme_info = st.context.theme
-            theme_base = getattr(theme_info, "base", "") or getattr(theme_info, "type", "")
-            if "light" in theme_base.lower():
-                logo_filename = "logo-black.png"
-    except Exception:
-        pass
+    if st.session_state.get("app_theme", "light") == "light":
+        logo_filename = "logo-black.png"
     
     logo_path = ROOT / "assets" / "images" / logo_filename
     if not logo_path.exists():
@@ -245,6 +245,21 @@ with col_header:
 # ----------------- SIDEBAR CONFIGURATION -----------------
 with st.sidebar:
     st.markdown("### Settings")
+    
+    # App Theme Selection
+    theme_options = ["Light Theme", "Dark Theme"]
+    default_theme_idx = 0 if st.session_state.app_theme == "light" else 1
+    selected_theme_label = st.selectbox("App Theme", theme_options, index=default_theme_idx)
+    new_theme = "light" if selected_theme_label == "Light Theme" else "dark"
+    
+    if new_theme != st.session_state.app_theme:
+        st.session_state.app_theme = new_theme
+        try:
+            st.rerun()
+        except AttributeError:
+            st.experimental_rerun()
+            
+    st.markdown("---")
     
     # Mode selection
     mode = st.radio("Processing Mode", ["Offline (Private)", "Online (API-based)"], index=0)
